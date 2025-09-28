@@ -1,6 +1,5 @@
 body {
   padding-top: 20px;
-  font-size: 160px; /* 设置基础字体大小，可以根据需要调整 */
 }
 
 .row {
@@ -26,7 +25,6 @@ body {
 
 #pub p {
   margin-bottom: 0.2%;
-  font-size: smaller;
 }
 
 #pub h5 {
@@ -56,21 +54,4 @@ body {
   border: 0;
   height: 2px;
   margin-bottom: 10px
-}
-
-/* Component-specific font sizes */
-#about {
-  font-size: 160px; /* Bio section font size */
-}
-
-#pub {
-  font-size: 160px; /* Publication section font size */
-}
-
-#edu {
-  font-size: 160px; /* Education section font size */
-}
-
-#exp {
-  font-size: 160px; /* Experience section font size */
 }
