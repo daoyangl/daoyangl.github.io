@@ -31,7 +31,10 @@
     <a href="#pub">Publication</a> &nbsp; / &nbsp;
     <a href="#edu">Education</a> &nbsp; / &nbsp;
     <a href="#exp">Experience</a> &nbsp; / &nbsp;
-    <a href="#service">Service</a>
+    <a href="#service">Service</a> &nbsp; / &nbsp;
+    <a href="#talk">Talk</a> &nbsp; / &nbsp;
+    <a href="#teaching">Teaching</a> &nbsp; / &nbsp;
+    <a href="#award">Award</a>
   </div>
   <div class="container" id="main">
     <div class="row">
@@ -138,6 +141,15 @@
 
         <!-- Service Secton - Loaded from components/service.html -->
         <div id="service-container"></div>
+
+        <!-- Talk Section - Loaded from components/talk.html -->
+        <div id="talk-container"></div>
+
+        <!-- Teaching Section - Loaded from components/teaching.html -->
+        <div id="teaching-container"></div>
+
+        <!-- Award Section - Loaded from components/award.html -->
+        <div id="award-container"></div>
 
 
 <!--         experience -->
@@ -268,7 +280,11 @@
       loadComponent('education-container', 'components/education.html');
       loadComponent('experience-container', 'components/experience.html');
       loadComponent('service-container', 'components.service.html');
+      loadComponent('talk-container', 'components.talk.html');
+      loadComponent('teaching-container', 'components.teaching.html');
+      loadComponent('award-container', 'components.award.html');
     });
   </script>
 </body>
 </html>
+
