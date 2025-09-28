@@ -1,6 +1,6 @@
 body {
   padding-top: 20px;
-  ont-size: 160px; /* 设置基础字体大小，可以根据需要调整 */
+  font-size: 160px; /* 设置基础字体大小，可以根据需要调整 */
 }
 
 .row {
