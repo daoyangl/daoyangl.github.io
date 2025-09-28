@@ -59,17 +59,17 @@ body {
 
 /* Component-specific font sizes */
 #about {
-  font-size: 16px; /* Bio section font size */
+  font-size: 160px; /* Bio section font size */
 }
 
 #pub {
-  font-size: 16px; /* Publication section font size */
+  font-size: 160px; /* Publication section font size */
 }
 
 #edu {
-  font-size: 16px; /* Education section font size */
+  font-size: 160px; /* Education section font size */
 }
 
 #exp {
-  font-size: 16px; /* Experience section font size */
+  font-size: 160px; /* Experience section font size */
 }
