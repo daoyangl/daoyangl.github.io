@@ -29,8 +29,8 @@
     <a href="#main">Bio</a> &nbsp; / &nbsp;
 <!--     <a href="#open-source">Open Source</a> &nbsp; / &nbsp; -->
     <a href="#pub">Publication</a> &nbsp; / &nbsp;
-    <a href="#edu">Education</a>
-<!--     <a href="#exp">Experience</a> &nbsp; / &nbsp; -->
+    <a href="#edu">Education</a> &nbsp; / &nbsp;
+    <a href="#exp">Experience</a> <!-- &nbsp; / &nbsp;  -->
 <!--     <a href="#service">Service</a> -->
   </div>
   <div class="container" id="main">
@@ -133,6 +133,9 @@
   
         <!-- Education Section - Loaded from components/education.html -->
         <div id="education-container"></div>
+
+        <!-- Experience Section - Loaded from components/experience.html -->
+        <div id="experience-container"></div>
 
   
 <!--         experience -->
@@ -278,7 +281,9 @@
       loadComponent('bio-container', 'components/bio.html');
       loadComponent('publication-container', 'components/publication.html');
       loadComponent('education-container', 'components/education.html');
+      loadComponent('experience-container', 'components/experience.html');
     });
   </script>
 </body>
 </html>
+
