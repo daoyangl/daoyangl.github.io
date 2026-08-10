@@ -1,0 +1,27 @@
+{
+  "whatIDo": [
+    "I am currently a Master's student in Spatial Data Science at the <a href=\"https://www.usc.edu/\" target=\"_blank\" rel=\"noopener\">University of Southern California</a>. I earned my Bachelor's degree in Data Science and Big Data Technology from <a href=\"https://www.muc.edu.cn/\" target=\"_blank\" rel=\"noopener\">Minzu University of China</a>.",
+    "My research centers on developing trustworthy and interpretable AI systems. I study the internal mechanisms of large language models and how they interact with human-designed tasks, and I explore their use in real-world settings such as coding and geo-spatial analysis.",
+    "By blending strong theoretical foundations with real-world applications, I aim to make AI not only smarter but also more understandable and impactful in practical settings."
+  ],
+  "experience": [
+    {
+      "role": "Research / Study",
+      "org": "University of Southern California · Viterbi School of Engineering",
+      "when": "2022 – 2024",
+      "detail": "Mentors: <a href=\"https://nijianmo.github.io/\" target=\"_blank\" rel=\"noopener\">Dr. Sisi</a> and "
+    }
+  ],
+  "education": [
+    {
+      "role": "M.S. Spatial Data Science",
+      "org": "University of Southern California · Viterbi School of Engineering",
+      "when": "2022 – 2024"
+    },
+    {
+      "role": "B.S. Data Science and Big Data Technology",
+      "org": "Minzu University of China · School of Information Engineering",
+      "when": "2018 – 2022"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Daoyang Li",
+  "photo": "assets/image.jpg",
+  "photoAlt": "Portrait of Daoyang Li",
+  "bio": "Master's student in Spatial Data Science at <a href=\"https://www.usc.edu/\" target=\"_blank\" rel=\"noopener\">USC</a>. I work on trustworthy and interpretable AI, with a focus on large language models and their use in coding and geo-spatial analysis.",
+  "email": "daoyangl AT usc.edu",
+  "social": [
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=-QfTPqgAAAAJ&hl=en&authuser=1"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/daoyangl"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/daoyang-li-a60780259/"
+    }
+  ]
+}

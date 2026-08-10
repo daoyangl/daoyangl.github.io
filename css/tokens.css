@@ -1,0 +1,50 @@
+/*
+ * tokens.css — 页面可调参数（颜色、尺寸、字体、间距）
+ * 改这里即可整体调整观感，无需翻找各处样式。
+ */
+
+:root {
+  /* ---------- 颜色：浅色模式（默认偏浅灰 / 淡黄，适合长时间阅读） ---------- */
+  --bg: #f4f2ea;                 /* 页面背景：淡黄灰 */
+  --bg-elevated: #faf9f5;        /* 卡片 / 导航背景 */
+  --text: #2c2c2c;               /* 主文字 */
+  --text-muted: #6b6b6b;         /* 次要文字、日期 */
+  --link: #3d5a4c;               /* 链接（低饱和墨绿，避免刺眼蓝） */
+  --link-hover: #1f3a2e;
+  --border: #ddd8cc;             /* 分割线 / 边框 */
+  --accent: #8a7f68;             /* 弱强调色 */
+
+  /* ---------- 字体 ---------- */
+  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --font-size: 17px;             /* 正文字号 */
+  --font-size-sm: 0.9rem;        /* 小字（日期） */
+  --font-size-nav: 1.05rem;      /* 导航链接字号 */
+  --font-size-lg: 1.35rem;       /* 小节标题 */
+  --font-size-xl: 1.85rem;       /* 页面主标题 */
+  --line-height: 1.7;            /* 行高，越大越易读 */
+
+  /* ---------- 布局 ---------- */
+  --page-max-width: 720px;       /* 正文栏最大宽度 */
+  --page-padding-x: 1.5rem;      /* 左右内边距 */
+  --page-padding-top: 5.5rem;    /* 给固定导航留空 */
+  --section-gap: 2.5rem;         /* 区块间距 */
+  --nav-height: 3.25rem;         /* 导航高度 */
+  --content-gap: 0.85rem;        /* 列表项间距 */
+
+  /* ---------- 其它 ---------- */
+  --radius: 4px;
+  --transition: 0.2s ease;
+}
+
+/* ---------- 颜色：深色模式（由 html[data-theme="dark"] 启用） ---------- */
+html[data-theme="dark"] {
+  --bg: #1c1c1a;
+  --bg-elevated: #252522;
+  --text: #e8e4d9;
+  --text-muted: #a39e90;
+  --link: #b7c9b0;
+  --link-hover: #d6e4cf;
+  --border: #3a3933;
+  --accent: #a89b7c;
+}
