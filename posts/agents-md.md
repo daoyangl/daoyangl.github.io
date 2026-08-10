@@ -1,8 +1,3 @@
----
-title: Site notes: AGENTS.md
-date: 2026-08-10
----
-
 This is the first sample post on the redesigned site. The body below is adapted from the project `AGENTS.md` design brief.
 
 ## Goal
