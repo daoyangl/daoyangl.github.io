@@ -370,30 +370,19 @@
     }
 
     function fetchPostMarkdown(slug) {
-      var primary = "posts/" + slug + "/index.md";
-      return fetch(primary).then(function (res) {
-        if (res.ok) return res;
-        // Fallback for older flat paths during migration / cache
-        return fetch("posts/" + slug + ".md");
-      });
+      return fetch("posts/" + slug + "/index.md");
     }
 
-    Promise.all([fetchJson("data/posts.json"), fetchPostMarkdown(slug)])
-      .then(function (results) {
-        var index = results[0];
-        var res = results[1];
+    // Only fetch Markdown — title/date come from front matter
+    fetchPostMarkdown(slug)
+      .then(function (res) {
         if (!res.ok) throw new Error("Post not found");
-        return res.text().then(function (raw) {
-          return { index: index, raw: raw };
-        });
+        return res.text();
       })
-      .then(function (payload) {
-        var parsed = parseFrontMatter(payload.raw);
-        var fromIndex = (payload.index || []).find(function (p) {
-          return p.slug === slug;
-        }) || {};
-        var title = parsed.meta.title || fromIndex.title || slug;
-        var date = parsed.meta.date || fromIndex.date || "";
+      .then(function (raw) {
+        var parsed = parseFrontMatter(raw);
+        var title = parsed.meta.title || slug;
+        var date = parsed.meta.date || "";
         if (titleEl) titleEl.textContent = title;
         if (dateEl) dateEl.textContent = formatDate(date);
         document.title = title + " · Daoyang Li";

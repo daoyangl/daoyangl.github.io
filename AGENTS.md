@@ -1,38 +1,64 @@
-个人网页
+# AGENTS.md
 
-核心问题：我希望把我的个人的简介、经历，以一种直观可视化的方式展示给我的同事、学生以及工业界的同僚。
+AI 助手与协作者说明（中文）。
 
-页面的仓库架构：
-1. 主页界面：我的简单的个人介绍，news列表，posts和research的近期进展
-2. archive：我的 posts 列表（每一个 post 是一个独立文件夹，内含 md 与图片等资源）
-3. research：我的research列表
-4. about：我的个人信息，学校、工作单位等时间线信息
-5. 其他的页面设计等信息
+## 目标
 
-个人界面设计
-1. 颜色要是淡灰色或者淡黄色，目的是让人看着舒适，可以适合长时间阅读眼睛不会过于疲劳
-2. 界面要尽量简洁，不要过于fancy
-3. 所有页面的最上面都有导航栏。导航栏的样式为左面是调整黑白色界面的图标，右侧是几个按键，分别是home、archive、research、about
-4. 页面大小，字体大小等，位置与大小调节的变量，可以由我自由且方便的调节，便于我的个性化调整。最好是一个单独的文件，来确定页面的这些参数，并且附上注释
+用简洁、易读的方式展示个人简介与经历。
 
-代码要求
-1. 代码尽量简洁，程序结构清晰
+## 仓库结构
 
-各个页面要求
- - 主页
-简单的个人介绍，以及各种社交媒体的链接
-前10个posts的链接，以及发布时间
+```
+daoyangl.github.io/
+├── index.html / archive.html / research.html / about.html / post.html
+├── css/
+│   ├── tokens.css      # 可调参数（颜色、字号、间距）
+│   └── style.css
+├── js/
+│   ├── site.js         # 站点逻辑
+│   └── vendor/
+│       └── marked.min.js   # Markdown 渲染（本地，避免 CDN 延迟）
+├── data/
+│   ├── home.json / posts.json / research.json / about.json
+├── posts/
+│   └── <slug>/
+│       ├── index.md    # 正文
+│       └── …           # 图片等资源
+├── assets/
+├── .nojekyll           # 关闭 Jekyll，保证 md 原样发布
+└── AGENTS.md
+```
 
- - posts
-每一个 post 是一个独立文件夹：`posts/<slug>/`
-  - `index.md`：正文（含 YAML front matter）
-  - 同目录可放图片等资源，Markdown 里用相对路径引用，例如 `![说明](figure.png)`
-参考 https://lilianweng.github.io/archives/
+## 页面
 
- - research
-参考 https://lilianweng.github.io/archives/
+| 页面 | 内容来源 |
+|------|----------|
+| home | `data/home.json` + 最近 posts |
+| archive | `data/posts.json` |
+| research | `data/research.json` |
+| about | `data/about.json` |
+| post | `posts/<slug>/index.md` |
 
- - about
-分为三部分：1. 我在干什么的文字部分
-2. 职位经历
-3. 教育经历
+## 设计
+
+- 淡灰 / 淡黄背景，适合长时间阅读
+- 界面简洁；导航：左姓名+主题切换，右 home / archive / research / about
+- 视觉参数优先改 `css/tokens.css`
+
+## 新增一篇 post
+
+1. 建文件夹 `posts/my-slug/`，写入 `index.md`（front matter 含 `title`、`date`；标题含冒号时请加引号）
+2. 图片放同目录，正文用 `![alt](image.png)`
+3. 在 `data/posts.json` 增加同名 `slug` 条目
+
+## 本地预览
+
+```powershell
+python -m http.server 8080
+```
+
+打开 http://127.0.0.1:8080/（不要用 `file://`）
+
+## 部署
+
+推送到 `main` 后由 GitHub Pages 发布：https://daoyangl.github.io/
