@@ -76,7 +76,13 @@
     });
   }
 
-  function renderPostList(container, posts, limit) {
+  function postHref(slug, from) {
+    var href = "post.html?slug=" + encodeURIComponent(slug);
+    if (from) href += "&from=" + encodeURIComponent(from);
+    return href;
+  }
+
+  function renderPostList(container, posts, limit, from) {
     if (!container) return;
     var list = Array.isArray(posts) ? posts.slice() : [];
     list.sort(function (a, b) {
@@ -96,8 +102,8 @@
         '<span class="date">' +
         formatDate(post.date) +
         "</span>" +
-        '<div><a class="title" href="post.html?slug=' +
-        encodeURIComponent(post.slug) +
+        '<div><a class="title" href="' +
+        postHref(post.slug, from) +
         '">' +
         escapeHtml(post.title) +
         "</a></div>" +
@@ -139,8 +145,8 @@
           '<span class="date">' +
           formatDate(post.date) +
           "</span>" +
-          '<div><a class="title" href="post.html?slug=' +
-          encodeURIComponent(post.slug) +
+          '<div><a class="title" href="' +
+          postHref(post.slug, "archive") +
           '">' +
           escapeHtml(post.title) +
           "</a></div>" +
@@ -360,26 +366,42 @@
     var back = document.querySelector(".post-back a");
     if (!back) return;
 
-    var fallback = "archive.html";
-    var referrer = document.referrer;
-    var sameOrigin = false;
-    try {
-      sameOrigin = !!referrer && new URL(referrer).origin === location.origin;
-    } catch (err) {
-      sameOrigin = false;
+    var destinations = {
+      home: "index.html",
+      index: "index.html",
+      archive: "archive.html",
+      posts: "archive.html"
+    };
+    var from = (new URLSearchParams(location.search).get("from") || "").toLowerCase();
+    if (destinations[from]) {
+      back.href = destinations[from];
+      return;
     }
 
-    if (sameOrigin) {
-      back.href = referrer;
-      back.addEventListener("click", function (e) {
-        if (e.defaultPrevented) return;
-        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        e.preventDefault();
-        history.back();
-      });
-    } else {
-      back.href = fallback;
-    }
+    var referrer = document.referrer;
+    try {
+      if (referrer && new URL(referrer).origin === location.origin) {
+        var path = new URL(referrer).pathname.toLowerCase();
+        if (path.indexOf("archive") !== -1) {
+          back.href = "archive.html";
+          return;
+        }
+        if (
+          path === "/" ||
+          path === "" ||
+          path.endsWith("/") ||
+          path.endsWith("/index.html") ||
+          path.endsWith("index.html")
+        ) {
+          back.href = "index.html";
+          return;
+        }
+        back.href = referrer;
+        return;
+      }
+    } catch (err) {}
+
+    back.href = "archive.html";
   }
 
   function loadPostPage() {
@@ -474,7 +496,7 @@
       tasks.push(
         fetchJson("data/posts.json")
           .then(function (posts) {
-            renderPostList(recentPosts, posts, 10);
+            renderPostList(recentPosts, posts, 10, "home");
             renderArchive(archiveList, posts);
           })
           .catch(function (err) {
