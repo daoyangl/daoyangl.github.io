@@ -1,6 +1,6 @@
 ---
 title: "Site notes: AGENTS.md"
-date: 2025-11-18
+date: 2025-07-09
 ---
 
 This is the first sample post on the redesigned site. The body below is adapted from the project `AGENTS.md` design brief.
@@ -43,6 +43,7 @@ Inspired by [Lilian Weng's archives](https://lilianweng.github.io/archives/): ch
 
 ## How to add a new post
 
-1. Create `posts/your-slug.md` with YAML front matter (`title`, `date`)
-2. Append an entry to `data/posts.json` with the same `slug`, `title`, and `date`
-3. The home page and archive will pick it up automatically
+1. Create folder `posts/your-slug/` and put `index.md` inside (with YAML front matter: `title`, `date`)
+2. Put images and other assets in the same folder; reference them in Markdown as `![alt](image.png)`
+3. Append an entry to `data/posts.json` with the same `slug`, `title`, and `date`
+4. The home page and archive will pick it up automatically

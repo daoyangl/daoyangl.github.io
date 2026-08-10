@@ -344,6 +344,18 @@
     renderTimeline(eduEl, data.education);
   }
 
+  function rewritePostAssetUrls(root, slug) {
+    if (!root) return;
+    var base = "posts/" + slug + "/";
+    root.querySelectorAll("img[src], a[href], source[src], video[src]").forEach(function (el) {
+      var attr = el.hasAttribute("src") ? "src" : "href";
+      var value = el.getAttribute(attr);
+      if (!value) return;
+      if (/^(https?:|data:|mailto:|tel:|#|\/)/i.test(value)) return;
+      el.setAttribute(attr, base + value.replace(/^\.\//, ""));
+    });
+  }
+
   function loadPostPage() {
     var params = new URLSearchParams(location.search);
     var slug = params.get("slug");
@@ -357,7 +369,16 @@
       return;
     }
 
-    Promise.all([fetchJson("data/posts.json"), fetch("posts/" + slug + ".md")])
+    function fetchPostMarkdown(slug) {
+      var primary = "posts/" + slug + "/index.md";
+      return fetch(primary).then(function (res) {
+        if (res.ok) return res;
+        // Fallback for older flat paths during migration / cache
+        return fetch("posts/" + slug + ".md");
+      });
+    }
+
+    Promise.all([fetchJson("data/posts.json"), fetchPostMarkdown(slug)])
       .then(function (results) {
         var index = results[0];
         var res = results[1];
@@ -381,6 +402,7 @@
         } else {
           bodyEl.innerHTML = "<pre>" + escapeHtml(parsed.body) + "</pre>";
         }
+        rewritePostAssetUrls(bodyEl, slug);
       })
       .catch(function (err) {
         console.error(err);
