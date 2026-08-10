@@ -362,19 +362,14 @@
     var titleEl = document.getElementById("post-title");
     var dateEl = document.getElementById("post-date");
     var bodyEl = document.getElementById("post-body");
-    if (!bodyEl) return;
+    if (!bodyEl) return Promise.resolve();
 
     if (!slug) {
       bodyEl.innerHTML = '<p class="empty-state">Missing post slug.</p>';
-      return;
+      return Promise.resolve();
     }
 
-    function fetchPostMarkdown(slug) {
-      return fetch("posts/" + slug + "/index.md");
-    }
-
-    // Only fetch Markdown — title/date come from front matter
-    fetchPostMarkdown(slug)
+    return fetch("posts/" + slug + "/index.md")
       .then(function (res) {
         if (!res.ok) throw new Error("Post not found");
         return res.text();
@@ -392,11 +387,30 @@
           bodyEl.innerHTML = "<pre>" + escapeHtml(parsed.body) + "</pre>";
         }
         rewritePostAssetUrls(bodyEl, slug);
+        return whenImagesReady(bodyEl);
       })
       .catch(function (err) {
         console.error(err);
         bodyEl.innerHTML = '<p class="empty-state">Unable to load this post.</p>';
       });
+  }
+
+  function whenImagesReady(root) {
+    var imgs = root ? Array.prototype.slice.call(root.querySelectorAll("img")) : [];
+    if (!imgs.length) return Promise.resolve();
+    return Promise.all(
+      imgs.map(function (img) {
+        if (img.complete) return Promise.resolve();
+        return new Promise(function (resolve) {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        });
+      })
+    );
+  }
+
+  function revealPage() {
+    document.documentElement.classList.remove("is-loading");
   }
 
   function boot() {
@@ -409,53 +423,71 @@
     var recentResearch = document.getElementById("recent-research");
     var researchList = document.getElementById("research-list");
     var aboutWhat = document.getElementById("about-what");
+    var aboutExperience = document.getElementById("about-experience");
+    var aboutEducation = document.getElementById("about-education");
     var postBody = document.getElementById("post-body");
+    var tasks = [];
 
     if (homeIntro) {
-      fetchJson("data/home.json")
-        .then(renderHomeIntro)
-        .catch(function (err) {
-          console.error(err);
-          homeIntro.innerHTML = '<p class="empty-state">Unable to load intro.</p>';
-        });
+      tasks.push(
+        fetchJson("data/home.json")
+          .then(function (data) {
+            renderHomeIntro(data);
+            return whenImagesReady(homeIntro);
+          })
+          .catch(function (err) {
+            console.error(err);
+            homeIntro.innerHTML = '<p class="empty-state">Unable to load intro.</p>';
+          })
+      );
     }
 
     if (recentPosts || archiveList) {
-      fetchJson("data/posts.json")
-        .then(function (posts) {
-          renderPostList(recentPosts, posts, 10);
-          renderArchive(archiveList, posts);
-        })
-        .catch(function (err) {
-          console.error(err);
-          if (recentPosts) recentPosts.innerHTML = '<p class="empty-state">Unable to load posts.</p>';
-          if (archiveList) archiveList.innerHTML = '<p class="empty-state">Unable to load posts.</p>';
-        });
+      tasks.push(
+        fetchJson("data/posts.json")
+          .then(function (posts) {
+            renderPostList(recentPosts, posts, 10);
+            renderArchive(archiveList, posts);
+          })
+          .catch(function (err) {
+            console.error(err);
+            if (recentPosts) recentPosts.innerHTML = '<p class="empty-state">Unable to load posts.</p>';
+            if (archiveList) archiveList.innerHTML = '<p class="empty-state">Unable to load posts.</p>';
+          })
+      );
     }
 
     if (recentResearch || researchList) {
-      fetchJson("data/research.json")
-        .then(function (items) {
-          renderResearch(recentResearch, items, 5);
-          renderResearchArchive(researchList, items);
-        })
-        .catch(function (err) {
-          console.error(err);
-          if (recentResearch) recentResearch.innerHTML = '<p class="empty-state">Unable to load research.</p>';
-          if (researchList) researchList.innerHTML = '<p class="empty-state">Unable to load research.</p>';
-        });
+      tasks.push(
+        fetchJson("data/research.json")
+          .then(function (items) {
+            renderResearch(recentResearch, items, 5);
+            renderResearchArchive(researchList, items);
+          })
+          .catch(function (err) {
+            console.error(err);
+            if (recentResearch) recentResearch.innerHTML = '<p class="empty-state">Unable to load research.</p>';
+            if (researchList) researchList.innerHTML = '<p class="empty-state">Unable to load research.</p>';
+          })
+      );
     }
 
-    if (aboutWhat || document.getElementById("about-experience") || document.getElementById("about-education")) {
-      fetchJson("data/about.json")
-        .then(renderAbout)
-        .catch(function (err) {
-          console.error(err);
-          if (aboutWhat) aboutWhat.innerHTML = '<p class="empty-state">Unable to load about.</p>';
-        });
+    if (aboutWhat || aboutExperience || aboutEducation) {
+      tasks.push(
+        fetchJson("data/about.json")
+          .then(renderAbout)
+          .catch(function (err) {
+            console.error(err);
+            if (aboutWhat) aboutWhat.innerHTML = '<p class="empty-state">Unable to load about.</p>';
+          })
+      );
     }
 
-    if (postBody) loadPostPage();
+    if (postBody) {
+      tasks.push(loadPostPage());
+    }
+
+    Promise.all(tasks).then(revealPage).catch(revealPage);
   }
 
   document.addEventListener("DOMContentLoaded", boot);

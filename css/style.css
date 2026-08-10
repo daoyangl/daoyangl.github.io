@@ -11,6 +11,18 @@ html {
   scrollbar-gutter: stable; /* keep width consistent across short/long pages */
 }
 
+/* Hide page until async content is ready, then fade in together */
+html.is-loading .site-nav,
+html.is-loading .page {
+  opacity: 0;
+}
+
+html:not(.is-loading) .site-nav,
+html:not(.is-loading) .page {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
