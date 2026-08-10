@@ -356,6 +356,32 @@
     });
   }
 
+  function initPostBack() {
+    var back = document.querySelector(".post-back a");
+    if (!back) return;
+
+    var fallback = "archive.html";
+    var referrer = document.referrer;
+    var sameOrigin = false;
+    try {
+      sameOrigin = !!referrer && new URL(referrer).origin === location.origin;
+    } catch (err) {
+      sameOrigin = false;
+    }
+
+    if (sameOrigin) {
+      back.href = referrer;
+      back.addEventListener("click", function (e) {
+        if (e.defaultPrevented) return;
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        history.back();
+      });
+    } else {
+      back.href = fallback;
+    }
+  }
+
   function loadPostPage() {
     var params = new URLSearchParams(location.search);
     var slug = params.get("slug");
@@ -363,6 +389,8 @@
     var dateEl = document.getElementById("post-date");
     var bodyEl = document.getElementById("post-body");
     if (!bodyEl) return Promise.resolve();
+
+    initPostBack();
 
     if (!slug) {
       bodyEl.innerHTML = '<p class="empty-state">Missing post slug.</p>';
