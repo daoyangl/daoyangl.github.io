@@ -1,5 +1,5 @@
 ---
-title: Site notes: AGENTS.md
+title: "Site notes: AGENTS.md"
 date: 2025-07-09
 ---
 
