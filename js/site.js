@@ -323,22 +323,22 @@
         container.innerHTML = '<li class="empty-state">No items yet.</li>';
         return;
       }
+      var leadWithOrg = container.getAttribute("data-lead") === "org";
       container.innerHTML = list
         .map(function (item) {
           var detail = item.detail
             ? '<p class="detail">' + item.detail + "</p>"
             : "";
+          var role =
+            '<div class="role">' + escapeHtml(item.role || "") + "</div>";
+          var org =
+            '<div class="org">' + escapeHtml(item.org || "") + "</div>";
+          var when =
+            '<div class="when">' + escapeHtml(item.when || "") + "</div>";
           return (
             "<li>" +
-            '<div class="role">' +
-            escapeHtml(item.role || "") +
-            "</div>" +
-            '<div class="org">' +
-            escapeHtml(item.org || "") +
-            "</div>" +
-            '<div class="when">' +
-            escapeHtml(item.when || "") +
-            "</div>" +
+            (leadWithOrg ? org + role : role + org) +
+            when +
             detail +
             "</li>"
           );

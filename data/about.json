@@ -14,13 +14,13 @@
   ],
   "education": [
     {
-      "role": "University of Southern California",
-      "org": "M.S. Spatial Data Science",
+      "role": "M.S. Spatial Data Science",
+      "org": "University of Southern California",
       "when": "2022 – 2024"
     },
     {
-      "role": "Minzu University of China",
-      "org": "B.S. Data Science and Big Data Technology",
+      "role": "B.S. Data Science and Big Data Technology",
+      "org": "Minzu University of China",
       "when": "2018 – 2022"
     }
   ]

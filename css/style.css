@@ -367,6 +367,15 @@ hr.soft + .timeline {
   color: var(--text);
 }
 
+/* Education leads with the school. Keep the first line emphasized. */
+.timeline[data-lead="org"] .org {
+  font-weight: 600;
+}
+
+.timeline[data-lead="org"] .role {
+  font-weight: 400;
+}
+
 .timeline .when {
   color: var(--text-muted);
   font-size: var(--font-size-sm);
