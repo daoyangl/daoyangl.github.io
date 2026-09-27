@@ -14,13 +14,13 @@
   ],
   "education": [
     {
-      "role": "M.S. Spatial Data Science",
-      "org": "University of Southern California · Viterbi School of Engineering",
+      "role": "University of Southern California",
+      "org": "M.S. Spatial Data Science",
       "when": "2022 – 2024"
     },
     {
-      "role": "B.S. Data Science and Big Data Technology",
-      "org": "Minzu University of China · School of Information Engineering",
+      "role": "Minzu University of China",
+      "org": "B.S. Data Science and Big Data Technology",
       "when": "2018 – 2022"
     }
   ]
