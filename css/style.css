@@ -383,8 +383,8 @@ hr.soft + .timeline {
 
 .timeline .detail {
   margin: 0.25rem 0 0;
-  color: var(--text-muted);
-  font-size: var(--font-size-sm);
+  color: var(--text);
+  font-size: var(--font-size);
 }
 
 /* ---------- Post page ---------- */
