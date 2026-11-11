@@ -471,6 +471,7 @@
     var recentPosts = document.getElementById("recent-posts");
     var archiveList = document.getElementById("archive-list");
     var recentResearch = document.getElementById("recent-research");
+    var homeResearch = document.getElementById("home-research");
     var researchList = document.getElementById("research-list");
     var aboutWhat = document.getElementById("about-what");
     var aboutExperience = document.getElementById("about-experience");
@@ -507,16 +508,18 @@
       );
     }
 
-    if (recentResearch || researchList) {
+    if (recentResearch || homeResearch || researchList) {
       tasks.push(
         fetchJson("data/research.json")
           .then(function (items) {
             renderResearch(recentResearch, items, 5);
+            renderResearchArchive(homeResearch, items);
             renderResearchArchive(researchList, items);
           })
           .catch(function (err) {
             console.error(err);
             if (recentResearch) recentResearch.innerHTML = '<p class="empty-state">Unable to load research.</p>';
+            if (homeResearch) homeResearch.innerHTML = '<p class="empty-state">Unable to load research.</p>';
             if (researchList) researchList.innerHTML = '<p class="empty-state">Unable to load research.</p>';
           })
       );
